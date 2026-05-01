@@ -1,7 +1,5 @@
 import { FloraState, Species, PALETTES } from "@/lib/motifTypes";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Shuffle, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -20,85 +18,65 @@ const SPECIES: { value: Species; label: string }[] = [
 
 export function ControlPanel({ state, onChange, onRandomize, onDownload }: Props) {
   return (
-    <div className="flex flex-col gap-8 h-full">
-      <div className="space-y-2">
-        <Label className="text-xs text-muted-foreground">Shape</Label>
-        <div className="grid grid-cols-2 gap-2">
-          {SPECIES.map((s) => (
-            <button
-              key={s.value}
-              onClick={() => onChange({ species: s.value })}
-              className={cn(
-                "rounded-md border px-3 py-2 text-sm transition-colors",
-                state.species === s.value
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-border bg-card hover:bg-accent",
-              )}
-            >
-              {s.label}
-            </button>
-          ))}
-        </div>
+    <div className="flex items-center gap-6 rounded-full border border-border bg-card px-5 py-3 shadow-sm">
+      <div className="flex items-center gap-1">
+        {SPECIES.map((s) => (
+          <button
+            key={s.value}
+            onClick={() => onChange({ species: s.value })}
+            className={cn(
+              "rounded-full px-3 py-1.5 text-sm transition-colors",
+              state.species === s.value
+                ? "bg-foreground text-background"
+                : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {s.label}
+          </button>
+        ))}
       </div>
 
-      <div className="space-y-2">
-        <Label className="text-xs text-muted-foreground">Palette</Label>
-        <div className="grid grid-cols-5 gap-2">
-          {PALETTES.map((p, i) => (
-            <button
-              key={p.nm}
-              onClick={() => onChange({ palette: i })}
-              title={p.nm}
-              className={cn(
-                "aspect-square rounded-md overflow-hidden border-2 transition-all",
-                state.palette === i
-                  ? "border-foreground scale-105"
-                  : "border-transparent hover:border-border",
-              )}
-            >
-              <div className="flex h-full w-full flex-col">
-                <div style={{ background: p.ou }} className="flex-1" />
-                <div style={{ background: p.inn }} className="flex-1" />
-                <div style={{ background: p.acc }} className="flex-1" />
-              </div>
-            </button>
-          ))}
-        </div>
+      <div className="h-6 w-px bg-border" />
+
+      <div className="flex items-center gap-1.5">
+        {PALETTES.map((p, i) => (
+          <button
+            key={p.nm}
+            onClick={() => onChange({ palette: i })}
+            title={p.nm}
+            className={cn(
+              "h-7 w-7 rounded-full overflow-hidden border-2 transition-all",
+              state.palette === i
+                ? "border-foreground scale-110"
+                : "border-transparent hover:border-border",
+            )}
+          >
+            <div className="flex h-full w-full">
+              <div style={{ background: p.ou }} className="flex-1" />
+              <div style={{ background: p.inn }} className="flex-1" />
+              <div style={{ background: p.acc }} className="flex-1" />
+            </div>
+          </button>
+        ))}
       </div>
 
-      <div className="space-y-3">
-        <div className="flex items-baseline justify-between">
-          <Label className="text-xs text-muted-foreground">Petals</Label>
-          <span className="font-mono text-sm tabular-nums">{state.petals}</span>
-        </div>
-        <Slider
-          min={3}
-          max={5}
-          step={1}
-          value={[state.petals]}
-          onValueChange={([v]) => onChange({ petals: v })}
-        />
-      </div>
+      <div className="h-6 w-px bg-border" />
 
-      <div className="space-y-2">
-        <Label htmlFor="seed" className="text-xs text-muted-foreground">Seed</Label>
-        <Input
-          id="seed"
-          type="number"
-          value={state.seed}
-          onChange={(e) => onChange({ seed: parseInt(e.target.value) || 0 })}
-          className="font-mono"
-        />
-      </div>
+      <Input
+        type="number"
+        value={state.seed}
+        onChange={(e) => onChange({ seed: parseInt(e.target.value) || 0 })}
+        className="h-8 w-24 font-mono text-sm"
+      />
 
-      <div className="mt-auto grid grid-cols-2 gap-2">
-        <Button variant="outline" onClick={onRandomize}>
-          <Shuffle className="mr-2 h-4 w-4" />
-          Random
+      <div className="h-6 w-px bg-border" />
+
+      <div className="flex items-center gap-1">
+        <Button variant="ghost" size="icon" onClick={onRandomize} className="h-8 w-8 rounded-full">
+          <Shuffle className="h-4 w-4" />
         </Button>
-        <Button onClick={onDownload}>
-          <Download className="mr-2 h-4 w-4" />
-          Export
+        <Button variant="ghost" size="icon" onClick={onDownload} className="h-8 w-8 rounded-full">
+          <Download className="h-4 w-4" />
         </Button>
       </div>
     </div>
