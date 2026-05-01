@@ -1,26 +1,79 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useCallback, useState } from "react";
+import { FloraState, PALETTES } from "@/lib/motifTypes";
+import { renderFlora } from "@/lib/floraUtils";
+import { ControlPanel } from "@/components/motif/ControlPanel";
+import { FloraCanvas } from "@/components/motif/FloraCanvas";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Motif Generator" },
+      { name: "description", content: "Generate and export botanical SVG motifs." },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Index() {
+  const [state, setState] = useState<FloraState>({
+    species: "rose",
+    palette: 0,
+    petals: 4,
+    seed: 1042,
+  });
+
+  const handleChange = (partial: Partial<FloraState>) =>
+    setState((prev) => ({ ...prev, ...partial }));
+
+  const handleRandomize = () => {
+    const sps = ["rose", "cheshire"] as const;
+    setState((prev) => ({
+      ...prev,
+      seed: Math.floor(Math.random() * 99997) + 1,
+      species: sps[Math.floor(Math.random() * sps.length)],
+      palette: Math.floor(Math.random() * PALETTES.length),
+      petals: 3 + Math.floor(Math.random() * 3),
+    }));
+  };
+
+  const handleDownload = useCallback(() => {
+    const p = PALETTES[state.palette];
+    const floraContent = renderFlora(state);
+    const svgString = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <rect width="800" height="800" fill="${p.bg}"/>
+  <g transform="translate(400,400)">
+    ${floraContent}
+  </g>
+</svg>`;
+    const blob = new Blob([svgString], { type: "image/svg+xml" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `motif-${state.species}-s${state.seed}.svg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, [state]);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex h-screen w-full bg-background text-foreground">
+      <aside className="w-[320px] shrink-0 border-r border-border bg-card p-6 flex flex-col">
+        <h1 className="text-lg font-semibold tracking-tight mb-6">Motif Generator</h1>
+        <ControlPanel
+          state={state}
+          onChange={handleChange}
+          onRandomize={handleRandomize}
+          onDownload={handleDownload}
+        />
+      </aside>
+      <main className="flex-1 p-8">
+        <div className="mx-auto h-full w-full max-w-4xl aspect-square">
+          <FloraCanvas state={state} />
+        </div>
+      </main>
     </div>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
