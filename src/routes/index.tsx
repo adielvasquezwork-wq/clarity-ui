@@ -33,7 +33,6 @@ function Index() {
       seed: Math.floor(Math.random() * 99997) + 1,
       species: sps[Math.floor(Math.random() * sps.length)],
       palette: Math.floor(Math.random() * PALETTES.length),
-      petals: 3 + Math.floor(Math.random() * 3),
     }));
   };
 
@@ -59,21 +58,16 @@ function Index() {
   }, [state]);
 
   return (
-    <div className="flex h-screen w-full bg-background text-foreground">
-      <aside className="w-[320px] shrink-0 border-r border-border bg-card p-6 flex flex-col">
-        <h1 className="text-lg font-semibold tracking-tight mb-6">Motif Generator</h1>
-        <ControlPanel
-          state={state}
-          onChange={handleChange}
-          onRandomize={handleRandomize}
-          onDownload={handleDownload}
-        />
-      </aside>
-      <main className="flex-1 p-8">
-        <div className="mx-auto h-full w-full max-w-4xl aspect-square">
-          <FloraCanvas state={state} />
-        </div>
-      </main>
+    <div className="flex h-screen w-full flex-col items-center justify-center bg-background text-foreground p-6 gap-6">
+      <div className="flex-1 min-h-0 aspect-square">
+        <FloraCanvas state={state} />
+      </div>
+      <ControlPanel
+        state={state}
+        onChange={handleChange}
+        onRandomize={handleRandomize}
+        onDownload={handleDownload}
+      />
     </div>
   );
 }
