@@ -1,4 +1,4 @@
-import { FloraState, Palette, PALETTES } from '../types';
+import { FloraState, PALETTES } from './motifTypes';
 
 export function mkR(seed: number) {
   let s = (seed + 1) * 9999;
