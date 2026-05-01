@@ -9,21 +9,21 @@ export function FloraCanvas({ state }: { state: FloraState }) {
 
   return (
     <div
-      className="relative w-full h-full overflow-hidden flex items-center justify-center rounded-2xl border border-border transition-colors duration-500"
+      className="relative w-full h-full overflow-hidden flex items-center justify-center rounded-3xl border border-border/50 transition-colors duration-500 shadow-2xl"
       style={{ backgroundColor: palette.bg }}
     >
       <AnimatePresence mode="wait">
         <motion.div
           key={`${state.species}-${state.seed}-${state.palette}-${state.petals}`}
-          initial={{ opacity: 0, scale: 0.96 }}
+          initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.02 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-          className="relative w-[80%] h-[80%] max-w-[560px] max-h-[560px]"
+          exit={{ opacity: 0, scale: 1.04 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="relative w-[75%] h-[75%] max-w-[500px] max-h-[500px]"
         >
           <svg
             viewBox="-200 -200 400 400"
-            className="w-full h-full overflow-visible drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+            className="w-full h-full overflow-visible"
             dangerouslySetInnerHTML={{ __html: floraContent }}
           />
         </motion.div>
