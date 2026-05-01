@@ -60,10 +60,8 @@ function Index() {
 
   return (
     <div className="flex h-screen w-full bg-background text-foreground">
-      <aside className="w-80 shrink-0 border-r border-border bg-card/50 backdrop-blur-sm p-6 flex flex-col overflow-y-auto">
-        <div className="mb-8">
-          <h1 className="text-sm font-semibold tracking-widest uppercase text-muted-foreground">Motif</h1>
-        </div>
+      <aside className="w-[320px] shrink-0 border-r border-border bg-card p-6 flex flex-col">
+        <h1 className="text-lg font-semibold tracking-tight mb-6">Motif Generator</h1>
         <ControlPanel
           state={state}
           onChange={handleChange}
@@ -71,8 +69,8 @@ function Index() {
           onDownload={handleDownload}
         />
       </aside>
-      <main className="flex-1 flex items-center justify-center p-12 bg-gradient-to-br from-background via-background to-accent/5">
-        <div className="w-full max-w-2xl aspect-square">
+      <main className="flex-1 p-8">
+        <div className="mx-auto h-full w-full max-w-4xl aspect-square">
           <FloraCanvas state={state} />
         </div>
       </main>
