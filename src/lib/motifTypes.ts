@@ -1,4 +1,4 @@
-export type Species = 'rose' | 'cheshire';
+export type Species = 'rose' | 'cheshire' | 'bloom' | 'ember';
 export type CenterStyle = 'crown';
 
 export interface Palette {

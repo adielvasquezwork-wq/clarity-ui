@@ -14,6 +14,8 @@ interface Props {
 const SPECIES: { value: Species; label: string }[] = [
   { value: "rose", label: "Rose" },
   { value: "cheshire", label: "Cheshire" },
+  { value: "bloom", label: "Bloom" },
+  { value: "ember", label: "Ember" },
 ];
 
 export function ControlPanel({ state, onChange, onRandomize, onDownload }: Props) {
