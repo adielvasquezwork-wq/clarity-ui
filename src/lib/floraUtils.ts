@@ -52,6 +52,22 @@ export function renderFlora(s: FloraState) {
       o += `<path d="${blobPD(8, 55 * sz, 1.4)}" fill="${p.acc}" />`;
       o += `<circle r="${f1(10 * sz)}" fill="${p.ce}" />`;
       break;
+    case 'bloom':
+      // Diamond squircle + 5-petal rose stack (Ref: teal/orange flower)
+      o += `<path d="${blobPD(4, 125 * sz, 1.8)}" fill="${p.ou}" />`;
+      o += `<path d="${blobPD(4, 92 * sz, 1.7)}" fill="${p.inn}" transform="rotate(8)" />`;
+      o += `<path d="${blobPD(5, 60 * sz, 1.5)}" fill="${p.acc}" />`;
+      o += `<path d="${blobPD(5, 28 * sz, 1.55)}" fill="${p.ou}" transform="rotate(36)" />`;
+      o += `<circle r="${f1(6 * sz)}" fill="${p.inn}" />`;
+      break;
+    case 'ember':
+      // Diamond + soft square + scalloped rose (Ref: orange/yellow/teal flower)
+      o += `<path d="${blobPD(4, 125 * sz, 1.7)}" fill="${p.ou}" />`;
+      o += `<path d="${blobPD(4, 90 * sz, 1.5)}" fill="${p.inn}" />`;
+      o += `<path d="${blobPD(8, 55 * sz, 1.45)}" fill="${p.acc}" />`;
+      o += `<path d="${blobPD(5, 28 * sz, 1.55)}" fill="${p.inn}" />`;
+      o += `<circle r="${f1(5 * sz)}" fill="${p.ou}" />`;
+      break;
   }
 
   return o;
